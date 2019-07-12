@@ -53,4 +53,25 @@ router.get("/:id/actions", async (req, res) => {
   }
 });
 
+//Add a new project
+
+router.post("/", async (req, res) => {
+  const projInfo = req.body;
+  try {
+    const newProj = await projectDb.insert(projInfo);
+    const projects = await projectDb.get();
+    if (newProj) {
+      res.status(201).json(projects);
+    } else {
+      res.status(400).json({
+        message: "Check to see if both name and description are filled out"
+      });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error occured trying to add a new project" });
+  }
+});
+
 module.exports = router;
