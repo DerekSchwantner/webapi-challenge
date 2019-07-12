@@ -40,4 +40,38 @@ router.post("/", async (req, res) => {
   }
 });
 
+//Update an action
+
+router.put("/:id", async (req, res) => {
+  const id = req.params.id;
+  const updatedActionInfo = req.body;
+  try {
+    const updatedAction = await actionDb.update(id, updatedActionInfo);
+    const action = await actionDb.get(id);
+    if (updatedAction) {
+      res.status(200).json({ action });
+    } else {
+      res.status(400).json({ message: "Unable to locate action with that id" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Error trying to update action" });
+  }
+});
+
+//Delte an action
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const deleteAction = await actionDb.remove(id);
+    if (deleteAction > 0) {
+      res.status(200).json({ message: "The action has been deleted" });
+    } else {
+      res.status(400).json({ message: "Unable to delete the actions" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Error trying to delete action" });
+  }
+});
+
 module.exports = router;
