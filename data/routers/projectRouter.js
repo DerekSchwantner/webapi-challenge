@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
       res.status(200).json(project);
     } else {
       res
-        .status(400)
+        .status(404)
         .json({ message: "Unable to locate project with that id" });
     }
   } catch (error) {
@@ -44,7 +44,7 @@ router.get("/:id/actions", async (req, res) => {
     if (findProj) {
       res.status(200).json(projectActions);
     } else {
-      res.status(400).json({
+      res.status(404).json({
         message: "Unable to locate actions from a project with that id"
       });
     }
@@ -86,7 +86,7 @@ router.put("/:id", async (req, res) => {
       res.status(200).json({ project });
     } else {
       res
-        .status(400)
+        .status(404)
         .json({ message: "Unable to locate project with that id" });
     }
   } catch (error) {
@@ -103,7 +103,9 @@ router.delete("/:id", async (req, res) => {
     if (deleteProject > 0) {
       res.status(200).json({ message: "The project has been deleted" });
     } else {
-      res.status(400).json({ message: "Unable to delete the projects" });
+      res
+        .status(404)
+        .json({ message: "Unable to delete the project with that id" });
     }
   } catch (error) {
     res.status(500).json({ error: "Error trying to delete project" });

@@ -11,7 +11,7 @@ router.get("/:id", async (req, res) => {
     if (actions) {
       res.status(200).json(actions);
     } else {
-      res.status(400).json({ message: "Unable to locate actions" });
+      res.status(404).json({ message: "Unable to locate action with that id" });
     }
   } catch (error) {
     res.status(500).json({ error: "Error trying to get actions" });
@@ -51,7 +51,7 @@ router.put("/:id", async (req, res) => {
     if (updatedAction) {
       res.status(200).json({ action });
     } else {
-      res.status(400).json({ message: "Unable to locate action with that id" });
+      res.status(404).json({ message: "Unable to update action with that id" });
     }
   } catch (error) {
     res.status(500).json({ error: "Error trying to update action" });
@@ -67,7 +67,9 @@ router.delete("/:id", async (req, res) => {
     if (deleteAction > 0) {
       res.status(200).json({ message: "The action has been deleted" });
     } else {
-      res.status(400).json({ message: "Unable to delete the actions" });
+      res
+        .status(404)
+        .json({ message: "Unable to delete the action with that id" });
     }
   } catch (error) {
     res.status(500).json({ error: "Error trying to delete action" });
