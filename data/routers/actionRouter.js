@@ -8,6 +8,7 @@ router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const actions = await actionDb.get(id);
+    console.log("ACTIONS:", actions);
     if (actions) {
       res.status(200).json(actions);
     } else {
@@ -24,19 +25,21 @@ router.post("/", async (req, res) => {
   const actionInfo = req.body;
   const id = req.body.project_id;
   console.log(id);
-  try {
-    const newAction = await actionDb.insert(actionInfo);
-    const projectActions = await projectDb.getProjectActions(id);
-    if (newAction) {
+  if (!actionInfo.project_id || !actionInfo.description || !actionInfo.notes) {
+    res.status(400).json({
+      message:
+        "Check to see if correct fields (project_id, description, notes ) are filled out"
+    });
+  } else {
+    try {
+      const newAction = await actionDb.insert(actionInfo);
+      const projectActions = await projectDb.getProjectActions(id);
       res.status(201).json(projectActions);
-    } else {
-      res.status(400).json({
-        message:
-          "Check to see if correct fields (project_id, description, notes ) are filled out"
-      });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ error: "Error occured trying to add a new action" });
     }
-  } catch (error) {
-    res.status(500).json({ error: "Error occured trying to add a new action" });
   }
 });
 

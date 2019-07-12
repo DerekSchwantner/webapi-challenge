@@ -7,7 +7,7 @@ ANSWER:
 
 - [ ] Describe Middleware?
 
-ANSWER: it is a function that gets the homies(req,res,) and performs operations on them. They can log actions from users, or possibly block certain things via authetication. It can change the req or res but is not necessary.
+ANSWER: it is a function that gets the homies(req,res, next) and performs operations on them. They can log actions from users, or possibly block certain things via authetication. It can change the req or res but is not necessary.
 
 - [ ] Describe a Resource?
 
@@ -15,7 +15,7 @@ ANSWER: Everything that you interact with is a resource. Each one can be identif
 
 - [ ] What can the API return to help clients know if a request was successful?
 
-ANSWER: Status codes such as 201 (created) or 200 (OK)
+ANSWER: Status codes such as 201 (created) or 200 (OK), messages
 
 - [ ] How can we partition our application into sub-applications?
 
