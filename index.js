@@ -12,3 +12,21 @@ I need this code, just don't know where, perhaps should make some middleware, do
 
 Go code!
 */
+const express = require("express");
+const actionRouter = require("./data/routers/actionRouter");
+const projectRouter = require("./data/routers/projectRouter");
+const server = express();
+
+server.use(express.json());
+
+server.get("/", (req, res) => {
+  res.send(`<h2>Here is the root url for my webapi-challenge</h2>`);
+});
+
+server.use("/api/actions", actionRouter);
+server.use("/api/projects", projectRouter);
+
+const port = 6000;
+server.listen(port, () => {
+  console.log(`\n* Server Running on http://localhost:${port} *\n`);
+});
